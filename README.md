@@ -12,7 +12,7 @@ The system is composed of three core microservices:
 
 ## Technical Stack
 
-*   **Languages**: Java 17
+*   **Languages**: Java 21
 *   **Frameworks**: Spring Boot 3.2.0
 *   **Databases**:
     *   PostgreSQL (for relational data)
@@ -39,7 +39,7 @@ inventory-management-system/
 
 ### Prerequisites
 
-*   Java 17 or later
+*   Java 21 or later
 *   Maven 3.6 or later
 *   Docker and Docker Compose
 
@@ -48,7 +48,7 @@ inventory-management-system/
 1.  **Clone the repository:**
 
     ```bash
-    git clone "I will this when i push the code to git"
+    git clone https://github.com/user-yormen/microservice-challenge.git
     cd inventory-management-system
     ```
 
