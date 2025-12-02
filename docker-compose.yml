@@ -9,11 +9,10 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: product_db
     ports:
-      - "5434:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
-      # - ./init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
     networks:
       - pesewa-network
     healthcheck:
@@ -26,7 +25,7 @@ services:
     image: mongo:5.0
     container_name: mongo
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:
@@ -73,7 +72,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5434/product_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/product_db
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
       postgres:
@@ -88,8 +87,8 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5434/inventory_db
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27018/inventory_events_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_db
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/inventory_events_db
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
       postgres:
@@ -106,8 +105,8 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5434/inventory_db
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27018/inventory_events_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_db
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/inventory_events_db
     depends_on:
       postgres:
         condition: service_healthy
