@@ -22,4 +22,5 @@ public class InventoryEvent {
     private String productName;
     private Integer quantity;
     private LocalDateTime timestamp;
+    private String eventType;
 }
