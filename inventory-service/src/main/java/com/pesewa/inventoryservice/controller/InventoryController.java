@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventory")
-@Tag(name = "Inventory Management", description = "APIs for managing inventory")
+@Tag(name = "Inventory Management", description = "APIs for managing inventory for products")
 public class InventoryController {
 
     private final InventoryService inventoryService;
@@ -37,7 +37,7 @@ public class InventoryController {
 
     @GetMapping("/{productId}")
     @Operation(summary = "Get inventory by product ID")
-    public ResponseEntity<Inventory> getInventoryByProductId(@PathVariable Long productId) {
+    public ResponseEntity<Inventory> getInventoryByProductId(@PathVariable("productId") Long productId) {
         Optional<Inventory> inventory = inventoryRepository.findById(productId);
         return inventory.map(ResponseEntity::ok)
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -45,8 +45,9 @@ public class InventoryController {
 
     @PostMapping("/{productId}/deduct")
     @Operation(summary = "Deduct stock for a product")
-    public ResponseEntity<Inventory> deductStock(@PathVariable Long productId, 
-                                                 @RequestParam Integer quantity) {
+    public ResponseEntity<Inventory> deductStock(
+            @PathVariable("productId") Long productId, 
+            @RequestParam("quantity") Integer quantity) {
         try {
             Inventory updated = inventoryService.deductStock(productId, quantity);
             return new ResponseEntity<>(updated, HttpStatus.OK);
@@ -56,9 +57,10 @@ public class InventoryController {
     }
 
     @PostMapping("/{productId}/add")
-    @Operation(summary = "Add stock for a product")
-    public ResponseEntity<Inventory> addStock(@PathVariable Long productId,
-                                              @RequestParam Integer quantity) {
+    @Operation(summary = "Add stock for a Product")
+    public ResponseEntity<Inventory> addStock(
+            @PathVariable("productId") Long productId,
+            @RequestParam("quantity") Integer quantity) {
         try {
             Inventory updated = inventoryService.addStock(productId, quantity);
             return new ResponseEntity<>(updated, HttpStatus.OK);
