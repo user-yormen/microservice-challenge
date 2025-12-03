@@ -3,6 +3,9 @@ package com.pesewa.inventoryservice.service;
 import com.pesewa.inventoryservice.event.InventoryEvent;
 import com.pesewa.inventoryservice.model.Inventory;
 import com.pesewa.inventoryservice.repository.InventoryRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 
 @Service
+@Slf4j
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
@@ -50,6 +54,7 @@ public class InventoryService {
         inventoryRepository.save(inventory);
         
         // Publish event
+        log.info("publishing stock {}", quantity);
         publishInventoryEvent(inventory, "STOCK_ADDED", quantity);
         
         return inventory;
