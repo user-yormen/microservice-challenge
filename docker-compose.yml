@@ -107,10 +107,15 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_db
       - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/inventory_events_db
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
       postgres:
         condition: service_healthy
       mongo:
+        condition: service_healthy
+      kafka:
         condition: service_healthy
     networks:
       - pesewa-network
